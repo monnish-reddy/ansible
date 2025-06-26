@@ -1,0 +1,12 @@
+- name: installig few  softwares and removing few softwares
+  hosts: local
+  connection: local
+  tasks:
+  - name: installing packages and removing packages
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+    loop:
+    - nginx
+    - mysql
+    
