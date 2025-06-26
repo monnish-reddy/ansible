@@ -1,0 +1,12 @@
+- name: task level variables
+  hosts: local
+  connection: local
+  vars:
+    course: ansible
+    trainer: monnish
+  tasks:
+  vars:
+    course: ansible tasks
+  - name: printing the couse information
+    ansible.builtin.debug:
+      msg: " the course name is {{ course }} ans trainer is {{ trainer }}"
