@@ -1,5 +1,6 @@
 - name: installig few  softwares and removing few softwares
   hosts: local
+  become: yes
   connection: local
   tasks:
   - name: installing packages and removing packages
