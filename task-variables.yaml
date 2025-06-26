@@ -5,8 +5,8 @@
     course: ansible
     trainer: monnish
   tasks:
-  vars:
-    course: ansible tasks
   - name: printing the couse information
+    vars:
+        course: ansible tasks
     ansible.builtin.debug:
       msg: " the course name is {{ course }} ans trainer is {{ trainer }}"
