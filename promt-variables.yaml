@@ -1,6 +1,7 @@
 - name: promt variables in ansible
   hosts: local
-  connections: local
+  connection: local
+
   vars_prompt:
   - name: username
     prompt: please enter your name
@@ -8,6 +9,7 @@
   - name: pass
     prompt: please enter password
     private: false
+    
   tasks:
    - name: testting the tasks level variables
      ansible.builtin.debug:
