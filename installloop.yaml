@@ -16,9 +16,8 @@
     loop:
     - {name: 'nginx' , state: 'present'}
     - {name: 'mysql', state: 'present'}
-    when: boolean = no
-
-  tasks:
+    when: boolean == "no"
+    
   - name: removing packages
     ansible.builtin.package:
       name: "{{ item.name }}"
@@ -26,5 +25,5 @@
     loop:
     - {name: 'nginx' , state: 'absent'}
     - {name: 'mysql', state: 'absent'}
-    when: boolean = no
+    when: boolean == "yes"
     
