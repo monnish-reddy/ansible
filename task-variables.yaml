@@ -9,4 +9,4 @@
     vars:
         course: ansible tasks
     ansible.builtin.debug:
-      msg: " the course name is {{ course }} ans trainer is {{ trainer }}"
+      msg: " the course name is {{ course }} and trainer is {{ trainer }}"
