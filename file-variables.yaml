@@ -1,0 +1,9 @@
+- name: file level variables
+  hosts: local
+  connection: local
+  vars_files:
+  - monnish.yaml
+  tasks:
+  - name: checking the task level variables
+    ansible.builtin.debug:
+      msg: " my name is {{ name }} and my age is {{ age}} years"
