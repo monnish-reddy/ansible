@@ -2,12 +2,29 @@
   hosts: local
   become: yes
   connection: local
+ 
+  vars_prompt:
+    name: boolean
+    prompt: please enter yes to install or no to remove packages?
+    private: false
+
   tasks:
-  - name: installing packages and removing packages
+  - name: installing packages 
+    ansible.builtin.package:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    loop:
+    - {name: 'nginx' , state: 'present'}
+    - {name: 'mysql', state: 'present'}
+    when: boolean = no
+
+  tasks:
+  - name: removing packages
     ansible.builtin.package:
       name: "{{ item.name }}"
       state: "{{ item.state }}"
     loop:
     - {name: 'nginx' , state: 'absent'}
     - {name: 'mysql', state: 'absent'}
+    when: boolean = no
     
