@@ -2,12 +2,16 @@
   hosts: local
   connection: local
   become: yes
+  #play level variables
   vars:
     name: "monnish"
     course: "ansible"
+  vars_files:
+  - course.yaml
   tasks:
   
   - name: printing the course information
+  #task level variables
     vars:
       course: "latest ansible"
     ansible.builtin.debug:
