@@ -1,0 +1,11 @@
+- name: play level variables
+  hosts: local
+  connection: local
+  become: yes
+  vars:
+    name: "monnish"
+    course: "ansible"
+  tasks:
+  - name: printing the course information
+    ansible.builtin.debug:
+      msg: "the course name is {{ course }} and the trainer is {{ name }}"
