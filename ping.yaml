@@ -1,0 +1,11 @@
+- name: ping the server
+  hosts: frontend
+  become: yes
+  tasks:
+  - name: saying hello to server
+    ansible.builtin.debug:
+      msg: "hello frontend"
+  - name: ping the server
+    ansible.builtin.ping:
+    
+    
