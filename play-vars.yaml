@@ -14,7 +14,5 @@
       msg: "the course name is {{ course }} and the trainer is {{ name }}"
 
   - name: printing the  second course information
-    vars:
-      course: "latest ansible"
     ansible.builtin.debug:
       msg: "the course name is {{ course }} and the trainer is {{ name }}"
