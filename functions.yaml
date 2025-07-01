@@ -1,0 +1,11 @@
+- name: functions
+  hosts: local
+  connection: local
+  vars:
+    persons: "monnish,raghu,suresh"
+  tasks:
+
+  - name: print names
+    ansible.builtin.debug:
+      msg: "hello {{persons|split(,)}}"
+      

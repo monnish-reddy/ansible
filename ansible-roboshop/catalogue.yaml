@@ -1,0 +1,66 @@
+- name: configuring catalogue component
+  hosts: catalogue
+  become: yes
+  tasks:
+  - name: disable default nodejs
+    ansible.builtin.command: dnf module disable nodejs
+  - name: enable nodejs 20 
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+  - name: install nodejs
+    ansible.builtin.package:
+      name: nodejs
+      state: present
+  - name: create system user
+    ansible.builtin.user:
+      name: roboshop
+      system: true
+      home: /app
+      shell: /sbin/nologin
+  - name: create directory 
+    ansible.builtin.file:
+      path: /app
+      state: directory
+  - name: download the content
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+      dest: /tmp/catalogue.zip
+  - name: unarchive the content
+    ansible.builtin.unarchive:
+      src:  /tmp/catalogue.zip
+      dest: /app
+      remote_src: yes
+  - name: download the dependencies
+    community.general.npm:
+      path: /app
+  - name: copy the cqatalogue service to system
+    ansible.builtin.copy:
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
+  - name: demon relaod
+    ansible.builtin.service:
+      deamon_reload: true
+  - name: start the service and enable the servic
+    ansible.builtin.service:
+      name: catalogue.service
+      state: started
+      enabled: yes
+
+  - name: copy mongo repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.reposd/mongo.repo
+  - name: install mongodb client
+    ansible.builtin.package:
+      name: mongodb-mongosh
+      state: present
+  - name: check products loaded or not
+    ansible.builtin.command: mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register: catalogue_output
+
+  - name: print catalogue output
+    ansible.builtin.debug:
+      msg: "{{ catalogue_output }}"
+
+  - name: load products
+    ansible.builtin.shell: mongosh --host mongodb.daws84s.site < /app/db/master-data.js
+    when: catalogue_output.stdout | int < 0wd
